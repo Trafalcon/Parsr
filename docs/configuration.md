@@ -18,7 +18,7 @@ There is only a few required keys:
 - `version` `[Number]` is the version number of the API.
 - `extractor` `[Object]` is a bunch of parameters about the extraction.
 - `cleaner` `[Array]` is a list of every cleaning tools that will be called.
-- `output` `[Object]` contains the list of fromats to export and some other details.
+- `output` `[Object]` contains the list of formats to export and some other details.
 
 Cleaning tools have default parameters that work pretty well, but you can override the parameters by providing the in the config.
 
@@ -35,7 +35,7 @@ The cleaner array may appear unconventionnal but is really easy to use. Every it
     "extractor": {                // Extraction options (See section 2.)
         "pdf": "extractor-tool",  // Select the tool to extract PDF files
         "img": "extractor-tool",  // Select the tool to extract image files (JPG, PNG, TIFF, etc.)
-        "language": "lang"        // Select the defaut language of your document. This is used to increase the accuracy of OCR tools (See section 2.2)
+        "language": "lang"        // Select the default language of your document. This is used to increase the accuracy of OCR tools (See section 2.2)
     },
     // The cleaner pipeline consists of a list of modules that will run on given file (See section 3.)
     "cleaner": [
@@ -73,8 +73,15 @@ _This means the module called `fontMerge` will be called, then `removeOutOfPage`
 
 Different extractors are available for each input file format.
 
-- PDF files: three extractors are currently available for PDF files: `pdfminer`, which is an advanced python based extractor capable of extracting low and high level textual structures (from characters to paragraphs) and `abbyy` that rely on ABBYY Finereader that is paid software. It is also possible to use `tesseract` in this case. The document will then be converted as an image, so expect the accuracy to be lower on texts.
-- Images: three extractors are supported for images: `tesseract` which is an Open Source OCR software, `google-vision`, which uses the Google Vision API to detect the contents of an image (see the [google vision documentation for more](../server/src/input/google-vision/README.md)) and `abbyy`, that relies on ABBYY Finereader, a paid solution for OCR on documents and images.
+- **PDF files:** two extractors are currently available for PDF files:
+  - `pdfminer`, which is an advanced python based extractor capable of extracting low and high level textual structures (from characters to paragraphs),
+  - `pdfjs`, Mozilla's free solution for parsing documents. This is the recommended extractor to parse large documents (200+ pages).
+- **Images:** five OCR extractors are supported for images:
+  - `tesseract` which is an Open Source OCR software,
+  - `abbyy`, that relies on ABBYY Finereader, a paid solution for OCR on documents and images,
+  - `google-vision`, which uses the [Google Vision](https://cloud.google.com/vision/) API to detect the contents of an image (see the [google vision documentation for more](google-vision.md)),
+  - `ms-cognitive-services`, that uses [Microsoft Cognitive Services](https://azure.microsoft.com/es-es/services/cognitive-services/) OCR to detect and process text inside an image.
+  - `amazon-textract`, that uses [Amazon Textract](https://us-east-2.console.aws.amazon.com/textract/home) service to detect and process text inside an image.
 
 ### 2.2. Language
 
